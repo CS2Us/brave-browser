@@ -17,7 +17,8 @@ const braveCoreRef = util.getProjectVersion('brave-core')
 if (!fs.existsSync(path.join(braveCoreDir, '.git'))) {
   Log.status(`Cloning brave-core [${braveCoreRef}] into ${braveCoreDir}...`)
   fs.mkdirSync(braveCoreDir)
-  util.runGit(braveCoreDir, ['clone', util.getNPMConfig(['projects', 'brave-core', 'repository', 'url']), '.'])
+  util.runGit(braveCoreDir, ['clone', util.getNPMConfig(['projects', 'brave-core', 'repository', 'url']), '--depth', '1', '.'])
+  util.runGit(braveCoreDir, ['fetch', '--unshallow'])
   util.runGit(braveCoreDir, ['checkout', braveCoreRef])
 }
 const braveCoreSha = util.runGit(braveCoreDir, ['rev-parse', 'HEAD'])
